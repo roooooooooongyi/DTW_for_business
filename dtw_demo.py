@@ -32,6 +32,12 @@ def exec_dtw(data_for_dtw):
     ds = dtw.distance_matrix(array_for_dtw_zscore_T)
    
     return pd.DataFrame(ds, index=indicators, columns=indicators)
+
+def write_output(dtw_matrix, filename):
+    cur_path = os.getcwd()
+    parent_path = os.path.dirname(cur_path) + '\\results\\'
+    file_path = parent_path + filename +'.csv'
+    dtw_matrix.to_csv(file_path, index=True, encoding='utf-8-sig')
     
 def get_dtw_wrapping_path(data, col1, col2):
     '''
@@ -79,9 +85,8 @@ def get_plot_wrapping_paths(data, col1, col2):
     dtwvis.plot_warpingpaths(x, y, paths, best_path)
  
 
-
-
 dtw_matrix = exec_dtw(data)
+write_output(dtw_matrix, 'dtw_matrix')
 get_wrapping_path(data, '直接流量737', '运营电脑')
 get_plot_wrapping_paths(data, '直接流量737','整体737')   
 
